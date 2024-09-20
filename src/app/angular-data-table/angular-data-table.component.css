@@ -1,0 +1,44 @@
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    width: 100%;
+  }
+  #txtsearch{
+    margin-top:20px;
+
+
+  }
+  .mat-mdc-input-element{
+    margin-top: 20px;
+  }
+
+  .action {
+    border: none;
+    background: none;
+    color: var(--color-lighten);
+    width: 35px;
+    height: 35px;
+}
+.action:hover{
+
+  background-color: rgba(130, 49, 211, 0.1);
+  border-radius: 50%;
+}
+
+.action .fa-eye:hover {
+   color: var(--color-primary);
+
+}
+.action .fa-edit:hover {
+  color: #00aaff;
+
+}
+.action .fa-trash-alt:hover {
+  color: var(--color-danger);
+  
+}
+.mat-mdc-row {
+  height: var(--mat-table-row-item-container-height, 35px);
+}

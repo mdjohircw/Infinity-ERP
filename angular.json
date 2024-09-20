@@ -34,6 +34,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/assets/img",
+              "src/assets/img/png",
               "src/assets/img/svg"
             ],
             "styles": [

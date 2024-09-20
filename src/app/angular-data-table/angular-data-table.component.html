@@ -1,0 +1,50 @@
+<div class="mat-elevation-z8">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Filter the table">
+  </mat-form-field>
+  
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+  
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+  
+    <!-- Actions Column (Edit/Delete buttons) -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <!-- You can add buttons or icons here for viewing, editing, and deleting -->
+        <button mat-button class="action view" (click)="viewElement(element)"><i class="far fa-eye"></i></button>
+        <button mat-button class="action edit" (click)="editElement(element)"><i class="far fa-edit"></i></button>
+        <button mat-button class="action delete" (click)="deleteElement(element)"><i class="fas fa-trash-alt"></i></button>
+      </td>
+    </ng-container>
+  
+    <!-- Table Header -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <!-- Table Row -->
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+  </table>
+  
+  
+    <!-- Paginator -->
+    <mat-paginator [length]="totalData" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+  
