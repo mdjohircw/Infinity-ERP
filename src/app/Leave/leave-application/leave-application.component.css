@@ -1,0 +1,17 @@
+.calendar-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    cursor: pointer;
+    width:20px;
+    height:20px;
+}
+.PurposeOfLv{
+    height:50px !important; 
+}
+.removeFile{
+    background-color:none;
+    border:none;
+    color:red;
+    padding:3px;
+}

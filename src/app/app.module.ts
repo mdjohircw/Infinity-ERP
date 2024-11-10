@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -16,6 +15,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { EmployeeProfileComponent } from './Personnel/employee-profile/employee-profile.component';
 import { SeparetionComponent } from './Personnel/separetion/separetion.component';
 import { MatIconModule } from '@angular/material/icon';
+import { LeaveApplicationComponent } from './Leave/leave-application/leave-application.component';
+import { ApiServiceService } from './api-service.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,8 @@ import { MatIconModule } from '@angular/material/icon';
     EmployeeListComponent,
     AngularDataTableComponent,
     EmployeeProfileComponent,
-    SeparetionComponent
+    SeparetionComponent,
+    LeaveApplicationComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ],
   providers: [
-    provideClientHydration()
+      ApiServiceService,
+      provideClientHydration()
+    
   ],
   bootstrap: [AppComponent]
 })

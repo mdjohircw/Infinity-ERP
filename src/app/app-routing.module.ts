@@ -7,6 +7,7 @@ import { AngularDataTableComponent } from './angular-data-table/angular-data-tab
 import { profile } from 'console';
 import { EmployeeProfileComponent } from './Personnel/employee-profile/employee-profile.component';
 import { SeparetionComponent } from './Personnel/separetion/separetion.component';
+import { LeaveApplicationComponent } from './Leave/leave-application/leave-application.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path:'separetion',
     component:SeparetionComponent
+  },
+  {
+    path:'leave-application',
+    component:LeaveApplicationComponent
   },
 
 /*   { path: '', redirectTo: '/Employee-entry', pathMatch: 'full' },

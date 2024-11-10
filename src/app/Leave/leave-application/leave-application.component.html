@@ -1,0 +1,220 @@
+<div class="crm mb-25">
+  <div class="container-fulid">
+     <div class="card card-Vertical card-default card-md mt-4 mb-4">
+
+        <div class="card-header d-flex align-items-center">
+           <div class="card-title d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-3">
+                 <h4>Leave Application</h4>
+              </div>
+
+           </div>
+
+           <div class="btn-wrapper">
+              <div class="dm-button-list d-flex flex-wrap align-items-end">
+              <button type="button" id="addnew" onclick="Cardbox();" class="btn btn-secondary btn-default btn-squared">Add New</button>                          
+              </div>
+           </div>
+        </div>
+         
+        <div id="Cardbox" class="card-body pb-md-30">
+           <div class="Vertical-form">
+                 <div class="row">
+                     <div class="col-lg-12">
+                         <div class="row">
+                             <div class="col-lg-3 col-md-6 col-sm-12" id="ddlCompanySection" style="display:none">
+                                 <div class="form-group">
+                                     <label id="lblHidenUserId" style="display: none"></label>
+                                     <label for="ddlCompany" class="color-dark fs-14 fw-500 align-center mb-10">Company</label>
+                                     <div class="support-form__input-id">
+                                         <div class="dm-select ">
+                                          <select name="ddlEmpName" id="ddlEmpName" class="select-search form-control">
+                                            <option value="0">---Select---</option>
+                                        </select>
+                                         </div>
+                                         <span class="text-danger" id="ddlCompanyError"></span>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="col-lg-3 col-md-6 col-sm-12" id="ddlEmpNameSection" style="display:none">
+                                 <div class="form-group">
+                                     <label for="ddlEmpName" class="color-dark fs-14 fw-500 align-center mb-10">Employee<span class="text-danger">*</span></label>
+                                     <div class="support-form__input-id">
+                                         <div class="dm-select ">
+                                             <select name="ddlEmpName" id="ddlEmpName" class="select-search form-control">
+                                                 <option value="0">---Select---</option>
+                                             </select>
+                                         </div>
+                                         <span class="text-danger" id="ddlEmpNameError"></span>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="col-lg-3 col-md-6 col-sm-12">
+                                 <div class="form-group">
+                                     <label for="ddlLeaveType" class="color-dark fs-14 fw-500 align-center mb-10">Leave Type<span class="text-danger">*</span></label>
+                                     <div class="support-form__input-id">
+                                         <div class="dm-select ">
+                                             <select name="ddlLeaveType" id="ddlLeaveType" class="select-search form-control" onchange="IsMetarityLv()">
+                                                 <option value="0" *ngFor="let leave of LeaveType">{{leave}}</option>
+                                             </select>
+                                         </div>
+                                         <span class="text-danger" id="ddlLeaveTypeError"></span>
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="col-lg-3  col-md-6 col-sm-12 col-sm-6" id="divapplyDate" style="display:none">
+                                 <div class="form-group position-relative">
+                                     <label for="datepicker5" class="color-dark fs-14 fw-500 align-center mb-10">
+                                         Apply Date<span class="text-danger">*</span>
+                                     </label>
+                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="datepicker5" placeholder="Apply Date">
+                                     <img class="svg calendar-icon" src="/hrms/img/svg/calendar.svg" alt="calendar">
+                                     <span class="text-danger" id="applydateError"></span>
+
+                                 </div>
+                             </div>
+                             <div class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
+                                 <div class="form-group position-relative">
+                                     <label for="datepicker" class="color-dark fs-14 fw-500 align-center mb-10">
+                                        Leave Start Date<span class="text-danger">*</span>
+                                     </label>
+                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="datepicker" placeholder="Start Date" onchange="calculateTotalDays()">
+                                     <i class="calendar-icon uil uil-calendar-alt "></i>
+                                     <span class="text-danger" id="lvstartdateError"></span>
+
+                                 </div>
+                             </div>
+                             <div class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
+                                 <div class="form-group position-relative">
+                                     <label for="datepicker2" class="color-dark fs-14 fw-500 align-center mb-10">
+                                       Leave End Date<span class="text-danger">*</span>
+                                     </label>
+                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="datepicker2" placeholder="End Date" onchange="calculateTotalDays()">
+                                     <i class="calendar-icon uil uil-calendar-alt "></i>
+                                 <span class="text-danger" id="datepicker2Error"></span>
+
+                                 </div>
+                             </div>
+                             <div class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
+                                 <div class="form-group position-relative">
+                                     <label for="totalDay" class="color-dark fs-14 fw-500 align-center mb-10">
+                                          Total Day
+                                     </label>
+                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="totalDay" placeholder="Total Day" disabled>
+                                 
+
+                                 </div>
+                             </div>
+                             
+                              <div id="pregnantDate" style="display:none" class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
+                                 <div class="form-group position-relative">
+                                     <label for="datepicker3" class="color-dark fs-14 fw-500 align-center mb-10">
+                                        Pregnant Date<span class="text-danger">*</span>
+                                     </label>
+                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="datepicker3" placeholder="Pregnant Date">
+                                     <i class="calendar-icon uil uil-calendar-alt "></i>
+                                     <span class="text-danger" id="datepicker3Error"></span>
+
+                                 </div>
+                             </div>
+                             <div id="expectedDeliverypanel" style="display:none" class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
+                                 <div class="form-group position-relative">
+                                     <label for="datepicker4" class="color-dark fs-14 fw-500 align-center mb-10">
+                                         Expected Delivery Date <span class="text-danger">*</span>
+                                     </label>
+                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="datepicker4" placeholder="Expected Delivery Date">
+                                     <i class="calendar-icon uil uil-calendar-alt "></i>
+                                     <span class="text-danger" id="datepicker4Error"></span>
+
+                                 </div>
+                             </div>
+                  
+                             <div class="col-lg-3 col-md-6 col-sm-12">
+                                 <div class="form-group">
+                                     <label for="ddlChargeHandOverTo" class="color-dark fs-14 fw-500 align-center mb-10">Charge hand Over To</label>
+                                     <div class="support-form__input-id">
+                                         <div class="dm-select ">
+                                             <select name="ddlChargeHandOverTo" id="ddlChargeHandOverTo" class="select-search form-control">
+                                                 <option value="0">---Select---</option>
+                                             </select>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+                             <div class="col-lg-3 col-md-6 col-sm-12">
+                                 <div class="form-group">
+
+                                     <label for="txtLeaveAddress" class="color-dark fs-14 fw-500 align-center mb-10">
+                                         Leave Address
+                                     </label>
+                                     <input type="text" class="form-control ih-medium ip-gray radius-xs b-light px-15" id="txtLeaveAddress" placeholder="Type First Name" pattern="[^\d]*" title="Numbers are not allowed">
+                                 </div>
+                             </div>
+
+                             <div class="col-lg-3 col-md-6 col-sm-12">
+                                 <div class="form-group form-element-textarea mb-20">
+                                     <label for="txtPurposeOfLv" class="color-dark fs-14 fw-500 align-center mb-10">
+                                         Purpose Of Leave
+                                      </label>
+                                     <textarea class="form-control PurposeOfLv" placeholder="Type Purpose Of Leave" id="txtPurposeOfLv" rows="1"></textarea>
+                                 </div>
+                             </div>
+                             <div class="col-lg-3 col-md-6 col-sm-12">
+                                 <div class="form-group">
+
+                                     <label for="txtContact" class="color-dark fs-14 fw-500 align-center mb-10">
+                                         Emergency Contact
+                                     </label>
+                                     <input type="text" class="form-control ih-medium ip-gray radius-xs b-light px-15" id="txtContact" placeholder="Phone Number">
+                                 </div>
+                             </div>
+                             <div class="col-lg-3 col-md-6 col-sm-12">
+                                 <div class="form-group form-element-textarea mb-20">
+                                     <label for="txtdocemnt" class="color-dark fs-14 fw-500 align-center mb-10">Attach Document (if any)</label>
+                                     <div class="dm-tag-wrap">
+                                         <div class="dm-upload">
+                                             <div class="dm-upload__button">
+                                                 <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" onclick="$('#upload-1').click()">
+                                                  <i class="uil uil-upload"></i>
+                                                  Click to Upload
+                                                </a>
+                                                 <input type="file" name="upload-1" class="upload-one" id="upload-1" multiple>
+                                             </div>
+                                             <div class="dm-upload__file">
+                                                 <ul id="fileList">
+                                                     <!-- Uploaded file names will appear here -->
+                                                 </ul>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+
+                             <div class="col-lg-3  col-md-6 col-sm-12">
+                                 <div class="form-group">
+                                     <label style="opacity: 0;" for="formGroupExampleInput"
+                                         class="color-dark fs-14 fw-500 align-center mb-10">
+                                         Name <span
+                                             class="text-danger"></span>
+                                     </label>
+                                     <button type="button" id="btnSave" 
+                                         class="btn btn-primary btn-default btn-squared px-30">Save</button>
+                                 </div>
+                             </div>
+
+
+                         </div>
+
+                     </div>
+
+
+
+   
+           </div>
+        </div>
+     </div>
+  </div>
+  </div>
+  </div>
