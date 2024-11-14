@@ -15,8 +15,17 @@ import { MatSortModule } from '@angular/material/sort';
 import { EmployeeProfileComponent } from './Personnel/employee-profile/employee-profile.component';
 import { SeparetionComponent } from './Personnel/separetion/separetion.component';
 import { MatIconModule } from '@angular/material/icon';
+import { provideHttpClient } from '@angular/common/http';
 import { LeaveApplicationComponent } from './Leave/leave-application/leave-application.component';
 import { ApiServiceService } from './api-service.service';
+import { LeaveService } from './leave.service';
+import { FormsModule } from '@angular/forms'; // Import FormsModule here
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,20 +36,28 @@ import { ApiServiceService } from './api-service.service';
     EmployeeProfileComponent,
     SeparetionComponent,
     LeaveApplicationComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatFormFieldModule,
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatIconModule
+    MatIconModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule, // Required for formControl in reactive forms
+    FormsModule,         // Optional, useful if also using template-driven forms
+    MatFormFieldModule,
+    MatSelectModule,
+    NgSelectModule
   ],
   providers: [
       ApiServiceService,
+      LeaveService,
+      provideHttpClient(),
       provideClientHydration()
     
   ],

@@ -1,3 +1,6 @@
+
+
+
 .calendar-icon {
     position: absolute;
     right: 10px;
@@ -15,3 +18,12 @@
     color:red;
     padding:3px;
 }
+
+.custom-select-panel .mat-option .mat-input-element {
+    width: 100%;
+  }
+  
+
+  .ngSelect2custome{
+    font-weight: normal;
+  }

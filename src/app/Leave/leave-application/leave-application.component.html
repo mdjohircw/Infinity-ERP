@@ -22,28 +22,33 @@
                  <div class="row">
                      <div class="col-lg-12">
                          <div class="row">
-                             <div class="col-lg-3 col-md-6 col-sm-12" id="ddlCompanySection" style="display:none">
+                             <div class="col-lg-3 col-md-6 col-sm-12" id="ddlCompanySection" >
                                  <div class="form-group">
                                      <label id="lblHidenUserId" style="display: none"></label>
                                      <label for="ddlCompany" class="color-dark fs-14 fw-500 align-center mb-10">Company</label>
                                      <div class="support-form__input-id">
                                          <div class="dm-select ">
-                                          <select name="ddlEmpName" id="ddlEmpName" class="select-search form-control">
-                                            <option value="0">---Select---</option>
+                                          <select name="ddlCompanyName" id="ddlCompanyName" class="form-control">
+                                            <option value="0001">ENFINITY ERP</option>
                                         </select>
                                          </div>
                                          <span class="text-danger" id="ddlCompanyError"></span>
                                      </div>
                                  </div>
                              </div>
-                             <div class="col-lg-3 col-md-6 col-sm-12" id="ddlEmpNameSection" style="display:none">
+                             <div class="col-lg-3 col-md-6 col-sm-12" id="ddlEmpNameSection">
                                  <div class="form-group">
                                      <label for="ddlEmpName" class="color-dark fs-14 fw-500 align-center mb-10">Employee<span class="text-danger">*</span></label>
                                      <div class="support-form__input-id">
                                          <div class="dm-select ">
-                                             <select name="ddlEmpName" id="ddlEmpName" class="select-search form-control">
-                                                 <option value="0">---Select---</option>
-                                             </select>
+<!--                                              <select name="ddlEmpName" id="ddlEmpName" class="form-control">
+                                                <option value="1">---Select---</option>
+                                                <option *ngFor="let employee of employees" [value]="employee.empId">{{ employee.fullName }}</option>
+                                             </select> -->
+
+                                             <ng-select [items]="employees" bindValue="empId" bindLabel="fullName"  placeholder="---Select---" class="ngSelect2custome">
+
+                                             </ng-select>
                                          </div>
                                          <span class="text-danger" id="ddlEmpNameError"></span>
                                      </div>
@@ -54,9 +59,19 @@
                                      <label for="ddlLeaveType" class="color-dark fs-14 fw-500 align-center mb-10">Leave Type<span class="text-danger">*</span></label>
                                      <div class="support-form__input-id">
                                          <div class="dm-select ">
-                                             <select name="ddlLeaveType" id="ddlLeaveType" class="select-search form-control" onchange="IsMetarityLv()">
-                                                 <option value="0" *ngFor="let leave of LeaveType">{{leave}}</option>
-                                             </select>
+<!--                                             <select name="ddlLeaveType" id="ddlLeaveType" class=" form-control" onchange="IsMetarityLv()">
+                                                <option *ngFor="let leave of leaveTypes" [value]="leave.leaveId">{{ leave.leaveName }}</option>
+                                            </select> -->
+                                            <ng-select 
+                                            [items]="leaveTypes" 
+                                            [multiple]="true"
+                                            bindLabel="leaveName" 
+                                            bindValue="leaveId" 
+                                            placeholder="---Select---"
+                                            class="ngSelect2custome"
+                                            >
+                                          </ng-select>
+                                          
                                          </div>
                                          <span class="text-danger" id="ddlLeaveTypeError"></span>
                                      </div>
@@ -81,7 +96,6 @@
                                      <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="datepicker" placeholder="Start Date" onchange="calculateTotalDays()">
                                      <i class="calendar-icon uil uil-calendar-alt "></i>
                                      <span class="text-danger" id="lvstartdateError"></span>
-
                                  </div>
                              </div>
                              <div class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
@@ -104,8 +118,57 @@
                                  
 
                                  </div>
-                             </div>
-                             
+                             </div> 
+                             <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+                                <div class="form-group position-relative">
+                                  <label for="startDate" class="color-dark fs-14 fw-500 align-center mb-10">
+                                    Leave Start Date <span class="text-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="date"
+                                    class="form-control ih-medium ip-light radius-xs b-light px-15"
+                                    id="startDate"
+                                    [(ngModel)]="startDate"
+                                    (change)="calculateTotalDays()"
+                                    placeholder="Start Date"
+                                  />
+                                  <span class="text-danger" id="lvstartdateError"></span>
+                                </div>
+                              </div>
+                              
+                              <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+                                <div class="form-group position-relative">
+                                  <label for="endDate" class="color-dark fs-14 fw-500 align-center mb-10">
+                                    Leave End Date <span class="text-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="date"
+                                    class="form-control ih-medium ip-light radius-xs b-light px-15"
+                                    id="endDate"
+                                    [(ngModel)]="endDate"
+                                    (change)="calculateTotalDays()"
+                                    placeholder="End Date"
+                                  />
+                                  <span class="text-danger" id="datepicker2Error"></span>
+                                </div>
+                              </div>
+                              
+                              <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+                                <div class="form-group position-relative">
+                                  <label for="totalDay" class="color-dark fs-14 fw-500 align-center mb-10">
+                                    Total Day
+                                  </label>
+                                  <input
+                                    type="text"
+                                    class="form-control ih-medium ip-light radius-xs b-light px-15"
+                                    id="totalDay"
+                                    [value]="totalDays"
+                                    placeholder="Total Day"
+                                      disabled
+                                  />
+                                </div>
+                              </div>
+                              
                               <div id="pregnantDate" style="display:none" class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
                                  <div class="form-group position-relative">
                                      <label for="datepicker3" class="color-dark fs-14 fw-500 align-center mb-10">
@@ -134,9 +197,14 @@
                                      <label for="ddlChargeHandOverTo" class="color-dark fs-14 fw-500 align-center mb-10">Charge hand Over To</label>
                                      <div class="support-form__input-id">
                                          <div class="dm-select ">
-                                             <select name="ddlChargeHandOverTo" id="ddlChargeHandOverTo" class="select-search form-control">
-                                                 <option value="0">---Select---</option>
-                                             </select>
+<!--                                              <select name="ddlChargeHandOverTo" id="ddlChargeHandOverTo" class="form-control">
+                                                <option value="1">---Select---</option>
+                                                <option *ngFor="let employee of employees" [value]="employee.empId">{{ employee.fullName }}</option>
+                                             </select> -->
+
+                                             <ng-select [items]="employees" bindValue="empId" bindLabel="fullName"  placeholder="---Select---" class="ngSelect2custome">
+
+                                             </ng-select>
                                          </div>
                                      </div>
                                  </div>
@@ -170,26 +238,31 @@
                                  </div>
                              </div>
                              <div class="col-lg-3 col-md-6 col-sm-12">
-                                 <div class="form-group form-element-textarea mb-20">
-                                     <label for="txtdocemnt" class="color-dark fs-14 fw-500 align-center mb-10">Attach Document (if any)</label>
-                                     <div class="dm-tag-wrap">
-                                         <div class="dm-upload">
-                                             <div class="dm-upload__button">
-                                                 <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" onclick="$('#upload-1').click()">
-                                                  <i class="uil uil-upload"></i>
-                                                  Click to Upload
-                                                </a>
-                                                 <input type="file" name="upload-1" class="upload-one" id="upload-1" multiple>
-                                             </div>
-                                             <div class="dm-upload__file">
-                                                 <ul id="fileList">
-                                                     <!-- Uploaded file names will appear here -->
-                                                 </ul>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
+                                <div class="form-group form-element-textarea mb-20">
+                                  <label for="txtdocemnt" class="color-dark fs-14 fw-500 align-center mb-10">Attach Document (if any)</label>
+                                  <div class="dm-tag-wrap">
+                                    <div class="dm-upload">
+                                      <div class="dm-upload__button">
+                                        <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" (click)="fileInput.click()">
+                                          <i class="uil uil-upload"></i> Click to Upload
+                                        </a>
+                                        <input type="file" #fileInput (change)="onFileSelected($event)" multiple style="display: none" />
+                                      </div>
+                                      <div class="dm-upload__file">
+                                        <ul id="fileList">
+                                          <li *ngFor="let file of allFiles; let i = index">
+                                            <i class="fas fa-link"></i> {{ file.name }}
+                                            <button type="button" (click)="removeFile(i)" class="removeFile">
+                                              <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              
 
 
                              <div class="col-lg-3  col-md-6 col-sm-12">

@@ -147,6 +147,10 @@ NB: this file contains the list of components/scss partial along with the style.
 
 ***************************/
 /* Custom bootstrap classes */
+/* 
+@import '~@ng-select/ng-select/themes/default.theame.css'; */
+
+@import "@ng-select/ng-select/themes/default.theme.css";
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     color: var(--color-dark);
@@ -154,6 +158,9 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   
   .color-primary {
     color: var(--color-primary);
+  }
+  .menuBgColor{
+    background-color: #1f2231;
   }
   
   .bg-primary {
