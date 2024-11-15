@@ -25,16 +25,19 @@
                                   <input type="text" class="form-control" formControlName="userName" name="username" placeholder="name@example.com">
                                   <div *ngIf="regForm.get('userName')?.touched && regForm.get('userName')?.errors" class="text-danger mt-1 small">
                                     <span *ngIf="regForm.get('userName')?.errors?.['required']">
-                                      <i class="bi bi-exclamation-circle-fill"></i> User name is required.
+                                       <i class="fas fa-dot-circle"></i> User name is required.
                                     </span>
                                     <span *ngIf="regForm.get('userName')?.errors?.['minlength']">
-                                      <i class="bi bi-exclamation-circle-fill"></i> User name must be at least {{ regForm.get('userName')?.errors?.['minlength']?.requiredLength }} characters long.
+                                       <i class="fas fa-dot-circle"></i> User name must be at least {{ regForm.get('userName')?.errors?.['minlength']?.requiredLength }} characters long.
                                     </span>
                                     <span *ngIf="regForm.get('userName')?.errors?.['maxlength']">
-                                      <i class="bi bi-exclamation-circle-fill"></i> User name cannot exceed {{ regForm.get('userName')?.errors?.['maxlength']?.requiredLength }} characters.
+                                       <i class="fas fa-dot-circle"></i> User name cannot exceed {{ regForm.get('userName')?.errors?.['maxlength']?.requiredLength }} characters.
                                     </span>
                                     <span *ngIf="regForm.get('userName')?.errors?.['whitespace']">
-                                       <i class="bi bi-exclamation-circle-fill"></i> white space not allows {{ regForm.get('userName')?.errors?.['maxlength']?.requiredLength }} characters.
+                                       <i class="fas fa-dot-circle"></i> white space not allows.
+                                     </span>
+                                     <span *ngIf="regForm.get('userName')?.errors?.['userExist']">
+                                       <i class="fas fa-dot-circle"></i>user name is allready 
                                      </span>
                                   </div>
                                   

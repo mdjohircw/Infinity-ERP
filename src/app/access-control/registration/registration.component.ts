@@ -17,7 +17,9 @@ export class RegistrationComponent {
         CustomeValidatio.noWhiteSpace
   
       
-    ])),
+    ]),
+    CustomeValidatio.userNameExistAsync
+  ),
     password : new FormControl('',Validators.required),
   })
 
