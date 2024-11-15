@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomeValidatio } from '../../custom-validator';
 
 @Component({
   selector: 'app-registration',
@@ -12,7 +13,8 @@ export class RegistrationComponent {
       
         Validators.required,
         Validators.minLength(4),
-        Validators.maxLength(8)
+        Validators.maxLength(8),
+        CustomeValidatio.noWhiteSpace
   
       
     ])),

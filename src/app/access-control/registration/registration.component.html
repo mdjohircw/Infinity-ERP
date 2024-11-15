@@ -33,6 +33,9 @@
                                     <span *ngIf="regForm.get('userName')?.errors?.['maxlength']">
                                       <i class="bi bi-exclamation-circle-fill"></i> User name cannot exceed {{ regForm.get('userName')?.errors?.['maxlength']?.requiredLength }} characters.
                                     </span>
+                                    <span *ngIf="regForm.get('userName')?.errors?.['whitespace']">
+                                       <i class="bi bi-exclamation-circle-fill"></i> white space not allows {{ regForm.get('userName')?.errors?.['maxlength']?.requiredLength }} characters.
+                                     </span>
                                   </div>
                                   
                                   
