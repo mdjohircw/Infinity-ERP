@@ -25,6 +25,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { RegistrationComponent } from './access-control/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     EmployeeProfileComponent,
     SeparetionComponent,
     LeaveApplicationComponent,
+    RegistrationComponent,
     
   ],
   imports: [

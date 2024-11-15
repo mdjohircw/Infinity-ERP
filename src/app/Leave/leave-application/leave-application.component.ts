@@ -1,12 +1,15 @@
-import { Component, OnInit ,ElementRef,ViewChild} from '@angular/core';
+import { Component, OnInit ,ElementRef,ViewChild,ViewEncapsulation } from '@angular/core';
 import { ApiServiceService } from '../../api-service.service';
 import { LeaveService } from '../../leave.service';
 import { NgModel } from '@angular/forms';
 import Swal from 'sweetalert2';
+
+
 @Component({
   selector: 'app-leave-application',
   templateUrl: './leave-application.component.html',
-  styleUrl: './leave-application.component.css'
+  styleUrl: './leave-application.component.css',
+  encapsulation: ViewEncapsulation.None, 
 })
 export class LeaveApplicationComponent implements OnInit {
 
@@ -30,7 +33,9 @@ export class LeaveApplicationComponent implements OnInit {
  
   leaveTypes: { leaveId: number, leaveName: string }[] = [];
   employees: { empId: number, fullName: string }[] = [];
-
+  company: { cmpId: string, cmpName: string }[] = []
+  selectedCompanyId: string | null = null; 
+  selectedLeaveIds:number | null = null;
   constructor(private leaveService: LeaveService) { }
 
   ngOnInit(): void {
@@ -49,14 +54,27 @@ export class LeaveApplicationComponent implements OnInit {
       }
     });
 
+    this.company = [
+      { cmpId: '0001', cmpName: 'INFINITY ERP' }
 
+    ];
+    this.selectedCompanyId = this.company[0].cmpId;
 
     
 
   }
+  isPregnantDateVisible(): boolean {
+    return this.selectedLeaveIds===3032;
+  }
 
 
 
+
+
+
+
+
+  
   @ViewChild('fileInput') fileInput!: ElementRef;
   
   allFiles: File[] = [];

@@ -27,10 +27,14 @@
                                      <label id="lblHidenUserId" style="display: none"></label>
                                      <label for="ddlCompany" class="color-dark fs-14 fw-500 align-center mb-10">Company</label>
                                      <div class="support-form__input-id">
-                                         <div class="dm-select ">
-                                          <select name="ddlCompanyName" id="ddlCompanyName" class="form-control">
+                                         <div >
+<!--                                           <select name="ddlCompanyName" id="ddlCompanyName" class="form-control">
                                             <option value="0001">ENFINITY ERP</option>
-                                        </select>
+                                        </select> -->
+
+                                        <ng-select [items]="company" bindValue="cmpId" [clearable]="false" bindLabel="cmpName" [(ngModel)]="selectedCompanyId" class="ngSelect2custome">
+
+                                        </ng-select>
                                          </div>
                                          <span class="text-danger" id="ddlCompanyError"></span>
                                      </div>
@@ -40,13 +44,13 @@
                                  <div class="form-group">
                                      <label for="ddlEmpName" class="color-dark fs-14 fw-500 align-center mb-10">Employee<span class="text-danger">*</span></label>
                                      <div class="support-form__input-id">
-                                         <div class="dm-select ">
+                                         <div  style="height: 48px;">
 <!--                                              <select name="ddlEmpName" id="ddlEmpName" class="form-control">
                                                 <option value="1">---Select---</option>
                                                 <option *ngFor="let employee of employees" [value]="employee.empId">{{ employee.fullName }}</option>
                                              </select> -->
 
-                                             <ng-select [items]="employees" bindValue="empId" bindLabel="fullName"  placeholder="---Select---" class="ngSelect2custome">
+                                             <ng-select [items]="employees" bindValue="empId" bindLabel="fullName" clearable="false" placeholder="---Select---" class="ngSelect2custome">
 
                                              </ng-select>
                                          </div>
@@ -58,17 +62,18 @@
                                  <div class="form-group">
                                      <label for="ddlLeaveType" class="color-dark fs-14 fw-500 align-center mb-10">Leave Type<span class="text-danger">*</span></label>
                                      <div class="support-form__input-id">
-                                         <div class="dm-select ">
+                                         <div class=" ">
 <!--                                             <select name="ddlLeaveType" id="ddlLeaveType" class=" form-control" onchange="IsMetarityLv()">
                                                 <option *ngFor="let leave of leaveTypes" [value]="leave.leaveId">{{ leave.leaveName }}</option>
                                             </select> -->
                                             <ng-select 
                                             [items]="leaveTypes" 
-                                            [multiple]="true"
                                             bindLabel="leaveName" 
                                             bindValue="leaveId" 
                                             placeholder="---Select---"
                                             class="ngSelect2custome"
+                                            clearable="false"
+                                            [(ngModel)]="selectedLeaveIds"
                                             >
                                           </ng-select>
                                           
@@ -88,37 +93,7 @@
 
                                  </div>
                              </div>
-                             <div class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
-                                 <div class="form-group position-relative">
-                                     <label for="datepicker" class="color-dark fs-14 fw-500 align-center mb-10">
-                                        Leave Start Date<span class="text-danger">*</span>
-                                     </label>
-                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="datepicker" placeholder="Start Date" onchange="calculateTotalDays()">
-                                     <i class="calendar-icon uil uil-calendar-alt "></i>
-                                     <span class="text-danger" id="lvstartdateError"></span>
-                                 </div>
-                             </div>
-                             <div class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
-                                 <div class="form-group position-relative">
-                                     <label for="datepicker2" class="color-dark fs-14 fw-500 align-center mb-10">
-                                       Leave End Date<span class="text-danger">*</span>
-                                     </label>
-                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="datepicker2" placeholder="End Date" onchange="calculateTotalDays()">
-                                     <i class="calendar-icon uil uil-calendar-alt "></i>
-                                 <span class="text-danger" id="datepicker2Error"></span>
 
-                                 </div>
-                             </div>
-                             <div class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
-                                 <div class="form-group position-relative">
-                                     <label for="totalDay" class="color-dark fs-14 fw-500 align-center mb-10">
-                                          Total Day
-                                     </label>
-                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="totalDay" placeholder="Total Day" disabled>
-                                 
-
-                                 </div>
-                             </div> 
                              <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
                                 <div class="form-group position-relative">
                                   <label for="startDate" class="color-dark fs-14 fw-500 align-center mb-10">
@@ -169,7 +144,7 @@
                                 </div>
                               </div>
                               
-                              <div id="pregnantDate" style="display:none" class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
+                              <div *ngIf="isPregnantDateVisible()" id="pregnantDate" class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
                                  <div class="form-group position-relative">
                                      <label for="datepicker3" class="color-dark fs-14 fw-500 align-center mb-10">
                                         Pregnant Date<span class="text-danger">*</span>
@@ -180,7 +155,7 @@
 
                                  </div>
                              </div>
-                             <div id="expectedDeliverypanel" style="display:none" class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
+                             <div *ngIf="isPregnantDateVisible()" id="expectedDeliverypanel" class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
                                  <div class="form-group position-relative">
                                      <label for="datepicker4" class="color-dark fs-14 fw-500 align-center mb-10">
                                          Expected Delivery Date <span class="text-danger">*</span>
@@ -196,13 +171,13 @@
                                  <div class="form-group">
                                      <label for="ddlChargeHandOverTo" class="color-dark fs-14 fw-500 align-center mb-10">Charge hand Over To</label>
                                      <div class="support-form__input-id">
-                                         <div class="dm-select ">
+                                         <div class="">
 <!--                                              <select name="ddlChargeHandOverTo" id="ddlChargeHandOverTo" class="form-control">
                                                 <option value="1">---Select---</option>
                                                 <option *ngFor="let employee of employees" [value]="employee.empId">{{ employee.fullName }}</option>
                                              </select> -->
 
-                                             <ng-select [items]="employees" bindValue="empId" bindLabel="fullName"  placeholder="---Select---" class="ngSelect2custome">
+                                             <ng-select [items]="employees" bindValue="empId" bindLabel="fullName" clearable="false" placeholder="---Select---" class="ngSelect2custome">
 
                                              </ng-select>
                                          </div>

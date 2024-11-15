@@ -8,7 +8,7 @@ import { profile } from 'console';
 import { EmployeeProfileComponent } from './Personnel/employee-profile/employee-profile.component';
 import { SeparetionComponent } from './Personnel/separetion/separetion.component';
 import { LeaveApplicationComponent } from './Leave/leave-application/leave-application.component';
-
+import { RegistrationComponent } from './access-control/registration/registration.component';
 const routes: Routes = [
   {
     path:'',
@@ -42,6 +42,10 @@ const routes: Routes = [
     path:'leave-application',
     component:LeaveApplicationComponent
   },
+  {
+    path:'login',
+    component:RegistrationComponent
+  }
 
 /*   { path: '', redirectTo: '/Employee-entry', pathMatch: 'full' },
   { path: '**', redirectTo: '/Employee-entry' } */
