@@ -1,7 +1,6 @@
 <div class="crm mb-25">
   <div class="container-fulid">
      <div class="card card-Vertical card-default card-md mt-4 mb-4">
-
         <div class="card-header d-flex align-items-center">
            <div class="card-title d-flex align-items-center justify-content-between">
               <div class="d-flex align-items-center gap-3">
@@ -16,253 +15,248 @@
               </div>
            </div>
         </div>
-         
-        <div id="Cardbox" class="card-body pb-md-30">
-           <div class="Vertical-form">
-                 <div class="row">
-                     <div class="col-lg-12">
-                         <div class="row">
-                             <div class="col-lg-3 col-md-6 col-sm-12" id="ddlCompanySection" >
-                                 <div class="form-group">
-                                     <label id="lblHidenUserId" style="display: none"></label>
-                                     <label for="ddlCompany" class="color-dark fs-14 fw-500 align-center mb-10">Company</label>
-                                     <div class="support-form__input-id">
-                                         <div >
-<!--                                           <select name="ddlCompanyName" id="ddlCompanyName" class="form-control">
-                                            <option value="0001">ENFINITY ERP</option>
-                                        </select> -->
+        <form [formGroup]="LeaveApplication" (ngSubmit)="onSubmit()">
+          <div  id="Cardbox" class="card-body pb-md-30">
+            <div class="Vertical-form">
+                  <div class="row">
+                      <div class="col-lg-12">
+         <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+            <div class="form-group position-relative">
+              <label for="startDate" class="color-dark fs-14 fw-500 align-center mb-10">
+                Company<span class="text-danger">*</span>
+              </label>
+              <ng-select [items]="company" placeholder="---Select---" bindValue="cmpId" [clearable]="false" bindLabel="cmpName"  formControlName="ddlCompany" class="ngSelect2custome">
 
-                                        <ng-select [items]="company" bindValue="cmpId" [clearable]="false" bindLabel="cmpName" [(ngModel)]="selectedCompanyId" class="ngSelect2custome">
+              </ng-select>
+              <div *ngIf="LeaveApplication.get('ddlCompany')?.invalid && LeaveApplication.get('ddlCompany')?.touched">
+                <small class="text-danger">Company is required.</small>
+              </div>
+            </div>
+          </div>
 
-                                        </ng-select>
-                                         </div>
-                                         <span class="text-danger" id="ddlCompanyError"></span>
-                                     </div>
-                                 </div>
-                             </div>
-                             <div class="col-lg-3 col-md-6 col-sm-12" id="ddlEmpNameSection">
-                                 <div class="form-group">
-                                     <label for="ddlEmpName" class="color-dark fs-14 fw-500 align-center mb-10">Employee<span class="text-danger">*</span></label>
-                                     <div class="support-form__input-id">
-                                         <div  style="height: 48px;">
-<!--                                              <select name="ddlEmpName" id="ddlEmpName" class="form-control">
-                                                <option value="1">---Select---</option>
-                                                <option *ngFor="let employee of employees" [value]="employee.empId">{{ employee.fullName }}</option>
-                                             </select> -->
+          <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+            <div class="form-group position-relative">
+              <label for="startDate" class="color-dark fs-14 fw-500 align-center mb-10">
+                Employee <span class="text-danger">*</span>
+              </label>
+              <ng-select [items]="employees" placeholder="---Select---" bindValue="empId" bindLabel="fullName" formControlName="ddlEmployee" clearable="false" placeholder="---Select---" class="ngSelect2custome">
 
-                                             <ng-select [items]="employees" bindValue="empId" bindLabel="fullName" clearable="false" placeholder="---Select---" class="ngSelect2custome">
+              </ng-select>
+              <div *ngIf="LeaveApplication.get('ddlEmployee')?.invalid && LeaveApplication.get('ddlEmployee')?.touched">
+                <small class="text-danger">Employee is required.</small>
+              </div>
+            </div>
+          </div>
 
-                                             </ng-select>
-                                         </div>
-                                         <span class="text-danger" id="ddlEmpNameError"></span>
-                                     </div>
-                                 </div>
-                             </div>
-                             <div class="col-lg-3 col-md-6 col-sm-12">
-                                 <div class="form-group">
-                                     <label for="ddlLeaveType" class="color-dark fs-14 fw-500 align-center mb-10">Leave Type<span class="text-danger">*</span></label>
-                                     <div class="support-form__input-id">
-                                         <div class=" ">
-<!--                                             <select name="ddlLeaveType" id="ddlLeaveType" class=" form-control" onchange="IsMetarityLv()">
-                                                <option *ngFor="let leave of leaveTypes" [value]="leave.leaveId">{{ leave.leaveName }}</option>
-                                            </select> -->
-                                            <ng-select 
-                                            [items]="leaveTypes" 
-                                            bindLabel="leaveName" 
-                                            bindValue="leaveId" 
-                                            placeholder="---Select---"
-                                            class="ngSelect2custome"
-                                            clearable="false"
-                                            [(ngModel)]="selectedLeaveIds"
-                                            >
-                                          </ng-select>
-                                          
-                                         </div>
-                                         <span class="text-danger" id="ddlLeaveTypeError"></span>
-                                     </div>
-                                 </div>
-                             </div>
-                             <div class="col-lg-3  col-md-6 col-sm-12 col-sm-6" id="divapplyDate" style="display:none">
-                                 <div class="form-group position-relative">
-                                     <label for="datepicker5" class="color-dark fs-14 fw-500 align-center mb-10">
-                                         Apply Date<span class="text-danger">*</span>
-                                     </label>
-                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="datepicker5" placeholder="Apply Date">
-                                     <img class="svg calendar-icon" src="/hrms/img/svg/calendar.svg" alt="calendar">
-                                     <span class="text-danger" id="applydateError"></span>
-
-                                 </div>
-                             </div>
-
-                             <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
-                                <div class="form-group position-relative">
-                                  <label for="startDate" class="color-dark fs-14 fw-500 align-center mb-10">
-                                    Leave Start Date <span class="text-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="date"
-                                    class="form-control ih-medium ip-light radius-xs b-light px-15"
-                                    id="startDate"
-                                    [(ngModel)]="startDate"
-                                    (change)="calculateTotalDays()"
-                                    placeholder="Start Date"
-                                  />
-                                  <span class="text-danger" id="lvstartdateError"></span>
-                                </div>
-                              </div>
-                              
-                              <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
-                                <div class="form-group position-relative">
-                                  <label for="endDate" class="color-dark fs-14 fw-500 align-center mb-10">
-                                    Leave End Date <span class="text-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="date"
-                                    class="form-control ih-medium ip-light radius-xs b-light px-15"
-                                    id="endDate"
-                                    [(ngModel)]="endDate"
-                                    (change)="calculateTotalDays()"
-                                    placeholder="End Date"
-                                  />
-                                  <span class="text-danger" id="datepicker2Error"></span>
-                                </div>
-                              </div>
-                              
-                              <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
-                                <div class="form-group position-relative">
-                                  <label for="totalDay" class="color-dark fs-14 fw-500 align-center mb-10">
-                                    Total Day
-                                  </label>
-                                  <input
-                                    type="text"
-                                    class="form-control ih-medium ip-light radius-xs b-light px-15"
-                                    id="totalDay"
-                                    [value]="totalDays"
-                                    placeholder="Total Day"
-                                      disabled
-                                  />
-                                </div>
-                              </div>
-                              
-                              <div *ngIf="isPregnantDateVisible()" id="pregnantDate" class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
-                                 <div class="form-group position-relative">
-                                     <label for="datepicker3" class="color-dark fs-14 fw-500 align-center mb-10">
-                                        Pregnant Date<span class="text-danger">*</span>
-                                     </label>
-                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="datepicker3" placeholder="Pregnant Date">
-                                     <i class="calendar-icon uil uil-calendar-alt "></i>
-                                     <span class="text-danger" id="datepicker3Error"></span>
-
-                                 </div>
-                             </div>
-                             <div *ngIf="isPregnantDateVisible()" id="expectedDeliverypanel" class="col-lg-3  col-md-6 col-sm-12 col-sm-6">
-                                 <div class="form-group position-relative">
-                                     <label for="datepicker4" class="color-dark fs-14 fw-500 align-center mb-10">
-                                         Expected Delivery Date <span class="text-danger">*</span>
-                                     </label>
-                                     <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="datepicker4" placeholder="Expected Delivery Date">
-                                     <i class="calendar-icon uil uil-calendar-alt "></i>
-                                     <span class="text-danger" id="datepicker4Error"></span>
-
-                                 </div>
-                             </div>
-                  
-                             <div class="col-lg-3 col-md-6 col-sm-12">
-                                 <div class="form-group">
-                                     <label for="ddlChargeHandOverTo" class="color-dark fs-14 fw-500 align-center mb-10">Charge hand Over To</label>
-                                     <div class="support-form__input-id">
-                                         <div class="">
-<!--                                              <select name="ddlChargeHandOverTo" id="ddlChargeHandOverTo" class="form-control">
-                                                <option value="1">---Select---</option>
-                                                <option *ngFor="let employee of employees" [value]="employee.empId">{{ employee.fullName }}</option>
-                                             </select> -->
-
-                                             <ng-select [items]="employees" bindValue="empId" bindLabel="fullName" clearable="false" placeholder="---Select---" class="ngSelect2custome">
-
-                                             </ng-select>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-
-                             <div class="col-lg-3 col-md-6 col-sm-12">
-                                 <div class="form-group">
-
-                                     <label for="txtLeaveAddress" class="color-dark fs-14 fw-500 align-center mb-10">
-                                         Leave Address
-                                     </label>
-                                     <input type="text" class="form-control ih-medium ip-gray radius-xs b-light px-15" id="txtLeaveAddress" placeholder="Type First Name" pattern="[^\d]*" title="Numbers are not allowed">
-                                 </div>
-                             </div>
-
-                             <div class="col-lg-3 col-md-6 col-sm-12">
-                                 <div class="form-group form-element-textarea mb-20">
-                                     <label for="txtPurposeOfLv" class="color-dark fs-14 fw-500 align-center mb-10">
-                                         Purpose Of Leave
-                                      </label>
-                                     <textarea class="form-control PurposeOfLv" placeholder="Type Purpose Of Leave" id="txtPurposeOfLv" rows="1"></textarea>
-                                 </div>
-                             </div>
-                             <div class="col-lg-3 col-md-6 col-sm-12">
-                                 <div class="form-group">
-
-                                     <label for="txtContact" class="color-dark fs-14 fw-500 align-center mb-10">
-                                         Emergency Contact
-                                     </label>
-                                     <input type="text" class="form-control ih-medium ip-gray radius-xs b-light px-15" id="txtContact" placeholder="Phone Number">
-                                 </div>
-                             </div>
-                             <div class="col-lg-3 col-md-6 col-sm-12">
-                                <div class="form-group form-element-textarea mb-20">
-                                  <label for="txtdocemnt" class="color-dark fs-14 fw-500 align-center mb-10">Attach Document (if any)</label>
-                                  <div class="dm-tag-wrap">
-                                    <div class="dm-upload">
-                                      <div class="dm-upload__button">
-                                        <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" (click)="fileInput.click()">
-                                          <i class="uil uil-upload"></i> Click to Upload
-                                        </a>
-                                        <input type="file" #fileInput (change)="onFileSelected($event)" multiple style="display: none" />
-                                      </div>
-                                      <div class="dm-upload__file">
-                                        <ul id="fileList">
-                                          <li *ngFor="let file of allFiles; let i = index">
-                                            <i class="fas fa-link"></i> {{ file.name }}
-                                            <button type="button" (click)="removeFile(i)" class="removeFile">
-                                              <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              
-
-
-                             <div class="col-lg-3  col-md-6 col-sm-12">
-                                 <div class="form-group">
-                                     <label style="opacity: 0;" for="formGroupExampleInput"
-                                         class="color-dark fs-14 fw-500 align-center mb-10">
-                                         Name <span
-                                             class="text-danger"></span>
-                                     </label>
-                                     <button type="button" id="btnSave" 
-                                         class="btn btn-primary btn-default btn-squared px-30">Save</button>
-                                 </div>
-                             </div>
-
-
-                         </div>
-
-                     </div>
-
-
-
-   
-           </div>
+          <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+            <div class="form-group position-relative">
+              <label for="ddlLeaveType" class="color-dark fs-14 fw-500 align-center mb-10">
+                 Leave Type<span class="text-danger">*</span>
+              </label>
+              <ng-select [items]="leaveTypes" placeholder="---Select---" bindLabel="leaveName"
+              bindValue="leaveId"
+              placeholder="---Select---"
+              class="ngSelect2custome"
+              clearable="false"
+              formControlName="ddlLeaveType"
+              >
+              </ng-select>
+              <div *ngIf="LeaveApplication.get('ddlLeaveType')?.invalid && LeaveApplication.get('ddlLeaveType')?.touched">
+                <small class="text-danger">Leave type is required.</small>
+              </div>
+            </div>
+          </div>
+      
+         <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+          <div class="form-group position-relative">
+            <label for="txtApplyDate" class="color-dark fs-14 fw-500 align-center mb-10">
+              Apply Date<span class="text-danger">*</span>
+            </label>
+            <input type="date" formControlName="txtApplyDate" placeholder="---Select---" class="form-control ih-medium ip-light radius-xs b-light px-15" />
+            <div *ngIf="LeaveApplication.get('txtApplyDate')?.invalid && LeaveApplication.get('txtApplyDate')?.touched">
+              <small class="text-danger">Apply date is required.</small>
+            </div>
+          </div>
         </div>
-     </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+          <div class="form-group position-relative">
+            <label for="startDate" class="color-dark fs-14 fw-500 align-center mb-10">
+               Start Date <span class="text-danger">*</span>
+            </label>
+            <input type="date" formControlName="txtStartDate" placeholder="---Select---" class="form-control ih-medium ip-light radius-xs b-light px-15" onclick="calculateTotalDays()" />
+            <div *ngIf="LeaveApplication.get('txtStartDate')?.invalid && LeaveApplication.get('txtStartDate')?.touched">
+              <small class="text-danger">Start date is required.</small>
+            </div>
+          
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+          <div class="form-group position-relative">
+            <label for="startDate" class="color-dark fs-14 fw-500 align-center mb-10">
+               End Date <span class="text-danger">*</span>
+            </label>
+            <input type="date" formControlName="txtEndDate"  onclick="calculateTotalDays()" class="form-control ih-medium ip-light radius-xs b-light px-15" />
+            <div *ngIf="LeaveApplication.get('txtEndDate')?.invalid && LeaveApplication.get('txtEndDate')?.touched">
+              <small class="text-danger">End date is required.</small>
+            </div>
+          
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+          <div class="form-group position-relative">
+            <label for="startDate" class="color-dark fs-14 fw-500 align-center mb-10">
+              Total Days
+            </label>
+            <input type="number" formControlName="txtTotalDays" class="form-control ih-medium ip-light radius-xs b-light px-15" readonly />
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+          <div class="form-group position-relative">
+            <label for="startDate" class="color-dark fs-14 fw-500 align-center mb-10">
+              Leave Address
+            </label>
+            <textarea formControlName="txtLeaveAddress" placeholder="type Address" class="form-control ih-medium ip-light radius-xs b-light px-15"></textarea>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+          <div class="form-group position-relative">
+            <label for="startDate" class="color-dark fs-14 fw-500 align-center mb-10">
+              Purpose of Leave
+            </label>
+            <textarea formControlName="txtPurposeOfLeave" placeholder="type purpose of lv" class="form-control ih-medium ip-light radius-xs b-light px-15"></textarea>
+
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-sm-6">
+          <div class="form-group position-relative">
+            <label for="startDate" class="color-dark fs-14 fw-500 align-center mb-10">
+              Emergency Contact
+            </label>
+            <input type="text" formControlName="txtEmergencyContact" placeholder="type Emergency Contact" class="form-control ih-medium ip-light radius-xs b-light px-15" />
+  
+          </div>
+        </div>
+
+
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="form-group form-element-textarea mb-20">
+              <label for="txtdocemnt" class="color-dark fs-14 fw-500 align-center mb-10">Attach Document (if any)</label>
+              <div class="dm-tag-wrap">
+                <div class="dm-upload">
+                  <div class="dm-upload__button">
+                    <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" (click)="fileInput.click()">
+                      <i class="uil uil-upload"></i> Click to Upload
+                    </a>
+                    <input
+                    type="file"
+                    #fileInput
+                    (change)="onFileSelected($event)"
+                    formControlName="attachments"
+                    multiple
+                    style="display: none"
+                  />
+                  
+                  </div>
+                  <div class="dm-upload__file">
+                    <ul id="fileList">
+                      <li *ngFor="let file of allFiles; let i = index">
+                        <i class="fas fa-link"></i> {{ file.name }}
+                        <button type="button" (click)="removeFile(i)" class="removeFile">
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary"  [disabled]="LeaveApplication.invalid">Submit</button>
+        </div>
+        </div>
+      </div>
+      </div>
+      </div>
+
+        </form>
+
+
+        <div class="mat-elevation-z8">
+          <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filter the table">
+          </mat-form-field>
+        
+          <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+            
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+              <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+        
+            <!-- Employee Name Column -->
+            <ng-container matColumnDef="empName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.empName}} </td>
+            </ng-container>
+        
+            <!-- Leave Type Column -->
+            <ng-container matColumnDef="leaveName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type </th>
+              <td mat-cell *matCellDef="let element"> {{element.leaveName}} </td>
+            </ng-container>
+        
+            <!-- Apply Date Column -->
+            <ng-container matColumnDef="applyDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Apply Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.applyDate | date}} </td>
+            </ng-container>
+        
+            <!-- Start Date Column -->
+            <ng-container matColumnDef="leaveStartDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.leaveStartDate | date}} </td>
+            </ng-container>
+        
+            <!-- End Date Column -->
+            <ng-container matColumnDef="leaveEndDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.leaveEndDate | date}} </td>
+            </ng-container>
+        
+            <!-- Remarks Column -->
+            <ng-container matColumnDef="remarks">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
+              <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+            </ng-container>
+        
+            <!-- Action Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <td mat-cell *matCellDef="let element">
+                <!-- You can add buttons or icons here for viewing, editing, and deleting -->
+                <button mat-button class="action view" (click)="viewElement(element)"><i class="far fa-eye"></i></button>
+                <button mat-button class="action edit" (click)="editElement(element)"><i class="far fa-edit"></i></button>
+                <button mat-button class="action delete" (click)="deleteElement(element)"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        
+          <mat-paginator [length]="totalData" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)">
+          </mat-paginator>
+        </div>
+        
+        
+  
   </div>
   </div>
   </div>
