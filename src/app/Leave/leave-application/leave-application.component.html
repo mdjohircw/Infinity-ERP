@@ -11,12 +11,12 @@
 
            <div class="btn-wrapper">
               <div class="dm-button-list d-flex flex-wrap align-items-end">
-              <button type="button" id="addnew" onclick="Cardbox();" class="btn btn-secondary btn-default btn-squared">Add New</button>                          
+              <button type="button" id="addnew" onclick="toggleCardbox()" class="btn btn-secondary btn-default btn-squared"> {{ buttonText }}</button>                          
               </div>
            </div>
         </div>
         <form [formGroup]="LeaveApplication" (ngSubmit)="onSubmit()">
-          <div  id="Cardbox" class="card-body pb-md-30">
+          <div  id="Cardbox" style="display: none;" class="card-body pb-md-30" *ngIf="isCardboxVisible">
             <div class="Vertical-form">
                   <div class="row">
                       <div class="col-lg-12">
@@ -186,11 +186,14 @@
         </form>
 
 
-        <div class="mat-elevation-z8">
-          <mat-form-field>
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Filter the table">
+        <div class="mat-elevation-z8" >
+          <mat-form-field appearance="outline" class="search-bar">
+            <input matInput (keyup)="applyFilter($event)" placeholder="Type to search..." />
+            <button mat-icon-button matSuffix aria-label="Clear" >
+              <mat-icon>search</mat-icon>
+            </button>
           </mat-form-field>
+          
         
           <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
             
@@ -202,9 +205,24 @@
         
             <!-- Employee Name Column -->
             <ng-container matColumnDef="empName">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.empName}} </td>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee</th>
+              <td mat-cell *matCellDef="let element">
+                <div style="display: flex; align-items: center;">
+                  <!-- Image -->
+                  <img 
+                  [src]="element.empImage || 'assets/img/author/user_img_default.jpg'" 
+                    alt="Employee Image" 
+                    style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;" 
+                  />
+                  <!-- Name and Designation -->
+                  <div>
+                    <div style="font-weight: bold;">{{element.empName}}</div>
+                    <div style="font-size: 12px; color: gray;">{{element.dsgName}}</div>
+                  </div>
+                </div>
+              </td>
             </ng-container>
+            
         
             <!-- Leave Type Column -->
             <ng-container matColumnDef="leaveName">
@@ -229,12 +247,35 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
               <td mat-cell *matCellDef="let element"> {{element.leaveEndDate | date}} </td>
             </ng-container>
-        
-            <!-- Remarks Column -->
-            <ng-container matColumnDef="remarks">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
-              <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+            <ng-container matColumnDef="approvalStatus">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+              <td mat-cell *matCellDef="let element">
+                <span 
+                  [style.background-color]="
+                    element.approvalStatus === 1 ? 'green' : 
+                    element.approvalStatus === 0 ? 'orange' : 
+                    element.approvalStatus === null ? '#b200ff' : 'red'"
+                  [style.color]="'white'"
+                  [style.padding]="'2px 4px'"
+                  [style.border-radius]="'12px'"
+                  [style.display]="'inline-block'"
+                  [style.font-size]="'10px'"
+                >
+                  {{ 
+                    element.approvalStatus === null ? 'Pending' : 
+                    element.approvalStatus === 0 ? 'Processing' : 
+                    element.approvalStatus === 1 ? 'Approved' : 'Rejected' 
+                  }}
+                </span>
+              </td>
             </ng-container>
+            
+            
+            
+            
+        
+
+
         
             <!-- Action Column -->
             <ng-container matColumnDef="actions">
@@ -242,7 +283,6 @@
               <td mat-cell *matCellDef="let element">
                 <!-- You can add buttons or icons here for viewing, editing, and deleting -->
                 <button mat-button class="action view" (click)="viewElement(element)"><i class="far fa-eye"></i></button>
-                <button mat-button class="action edit" (click)="editElement(element)"><i class="far fa-edit"></i></button>
                 <button mat-button class="action delete" (click)="deleteElement(element)"><i class="fas fa-trash-alt"></i></button>
               </td>
             </ng-container>

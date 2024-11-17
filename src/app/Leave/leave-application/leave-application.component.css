@@ -73,3 +73,37 @@
 .mat-mdc-row {
   height: var(--mat-table-row-item-container-height, 35px);
 }
+
+.mat-header-cell {
+  font-weight: bold;
+}
+
+.search-bar {
+  width: 100%; /* Full width */
+  max-width: 300px; /* Optional: Limit the maximum width */
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  padding: 10px; /* Add padding for better usability */
+}
+
+.mat-form-field-outline {
+  border-radius: 50px; /* Make it rounded */
+}
+
+.mat-icon {
+  color: gray; /* Optional: Adjust the icon color */
+  border: none;
+}
+.mat-icon-button{
+  border: none;
+  background-color: transparent;
+}
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  border-radius: 50px; /* Round border for outline appearance */
+}
+.mat-mdc-input-element {
+  margin-top: 0;
+}

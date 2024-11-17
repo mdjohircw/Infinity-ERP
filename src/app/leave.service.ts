@@ -9,13 +9,15 @@ import { PaginatedResponse } from './Leave/paginated-response';
 export class LeaveService {
 
   private RootUrl='https://localhost:7220'
-  private userId: string = '86'; 
+  private userId: string = '113'; 
   private CompanyId : string ='0001';
   private EmpId : string = '00000017'
   private GetLeaveTypeUrl = `/api/Leave/LeaveType/${this.CompanyId}`;
   private GetEmployeeUrl = '/api/Employee/EmployeeName';
   private GetLeavesUrl = `/api/Leave/lvApplications/${this.CompanyId}?EmpId=${this.EmpId}`;
   private PostLeaveUrl = `/api/Leave/create/${this.userId}`;
+  private DeleteLeaveUrl = `/api/Leave/delete`;
+
   private token='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIiLCJpYXQiOjE3MTM5MzIxOTYsImV4cCI6MTc0NTQ2ODE5NiwiYXVkIjoiIiwic3ViIjoiSldUU2VydmljZUFjY2Vzc1Rva2VuIn0.letXzwpes_YaMFumZsklIowaTR80FXr3m5h8mwCABCQ';
   constructor(private http: HttpClient) {}
 
@@ -49,6 +51,11 @@ export class LeaveService {
         return response.data || []; // Adjust based on API response structure
       })
     );
+  }
+  deleteLeave(leaveId: number): Observable<any> {
+    const url = `${this.RootUrl}${this.DeleteLeaveUrl}/${leaveId}`;
+    console.log('Delete URL:', url); // Log the URL to check if it's valid
+    return this.http.delete(url);
   }
   
   getData(pageIndex: number, pageSize: number, filter: string, sortColumn: string, sortDirection: string): Observable<PaginatedResponse<LeaveData>> {

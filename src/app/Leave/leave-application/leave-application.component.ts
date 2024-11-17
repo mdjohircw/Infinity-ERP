@@ -46,7 +46,7 @@ export class LeaveApplicationComponent implements OnInit {
  
   }
 
-  displayedColumns: string[] = ['id', 'empName', 'leaveName', 'applyDate', 'leaveStartDate', 'leaveEndDate','actions'];
+  displayedColumns: string[] = [ 'empName', 'leaveName', 'applyDate', 'leaveStartDate', 'leaveEndDate','approvalStatus','actions'];
   dataSource: LeaveData[] = [];
   totalData = 0;
   pageSize = 10;
@@ -92,11 +92,88 @@ export class LeaveApplicationComponent implements OnInit {
     console.log('Edit element:', element);
   }
 
-  deleteElement(element: any) {
+ /*  deleteElement(element: any) {
     console.log('Delete element:', element);
-  }
-  
+  } */
 
+
+    deleteElement(element: any) {
+      const leaveId = element.id; // Assuming the leave ID is a property of the element
+    
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you really want to delete this leave?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.leaveService.deleteLeave(leaveId).subscribe({
+            next: (response: any) => {
+              // Handle different status codes in the response
+              if (response.statusCode === 200) {
+                Swal.fire({
+                  title: 'Success!',
+                  text: 'Leave deleted successfully.',
+                  icon: 'success',
+                  confirmButtonText: 'OK',
+                }).then(() => {
+                  this.loadData(); // Replace with your function to refresh the leave list
+                });
+              } else if (response.statusCode === 401) {
+                Swal.fire({
+                  title: 'Error!',
+                  text: 'The leave is already being processed, so it cannot be deleted.',
+                  icon: 'error',
+                  confirmButtonText: 'OK',
+                }).then(() => {
+                  this.loadData(); // Refresh the list if needed
+                });
+              } else if (response.statusCode === 402) {
+                Swal.fire({
+                  title: 'Error!',
+                  text: 'The leave is already approved, so it cannot be deleted.',
+                  icon: 'error',
+                  confirmButtonText: 'OK',
+                }).then(() => {
+                  this.loadData();
+                });
+              } else if (response.statusCode === 403) {
+                Swal.fire({
+                  title: 'Error!',
+                  text: 'The leave is already rejected, so it cannot be deleted.',
+                  icon: 'error',
+                  confirmButtonText: 'OK',
+                }).then(() => {
+                  this.loadData();
+                });
+              }
+            },
+            error: (error) => {
+              // Handle unexpected errors or bad request errors
+              if (error.status === 400) {
+                Swal.fire({
+                  title: 'Error!',
+                  text: error.error.message || 'Bad request while deleting the leave.',
+                  icon: 'error',
+                  confirmButtonText: 'OK',
+                });
+              } else {
+                Swal.fire({
+                  title: 'Error!',
+                  text: 'An unexpected error occurred while deleting the leave.',
+                  icon: 'error',
+                  confirmButtonText: 'OK',
+                });
+              }
+            },
+          });
+        }
+      });
+    }
+    
   calculateTotalDays(): void {
     const startDate = this.LeaveApplication.get('txtStartDate')?.value;
     const endDate = this.LeaveApplication.get('txtEndDate')?.value;
@@ -143,8 +220,6 @@ export class LeaveApplicationComponent implements OnInit {
         handedOverEmpId: this.LeaveApplication.get('ddlChargeHandeOverEmp')?.value || '',
         lvAddress: this.LeaveApplication.get('txtLeaveAddress')?.value,
         lvContact: this.LeaveApplication.get('txtEmergencyContact')?.value,
-        approvalStatus: 0,
-        leaveProcessingOrder: null,
         companyId: this.LeaveApplication.get('ddlCompany')?.value,
         empTypeId: 0,
         sftId: 0,
@@ -164,6 +239,7 @@ export class LeaveApplicationComponent implements OnInit {
             title: 'Success',
             text: 'Your leave application has been submitted successfully!',
           });
+          this.loadData();
         },
         (error) => {
           Swal.fire({
@@ -192,7 +268,13 @@ export class LeaveApplicationComponent implements OnInit {
   selectedCompanyId: string | null = null; 
   selectedLeaveIds:number | null = null;
 
+  isCardboxVisible: boolean = false;
+  buttonText: string = 'Add New';
 
+  toggleCardbox(): void {
+    this.isCardboxVisible = !this.isCardboxVisible;
+    this.buttonText = this.isCardboxVisible ? 'Close' : 'Add New';
+  }
   ngOnInit(): void {
     this.leaveService.getLeaveTypes().subscribe(response => {
       if (response.statusCode === 200) {
