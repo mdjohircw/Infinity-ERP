@@ -26,6 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { RegistrationComponent } from './access-control/registration/registration.component';
+import { LeaveApproveComponent } from './Leave/leave-approve/leave-approve.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { RegistrationComponent } from './access-control/registration/registratio
     SeparetionComponent,
     LeaveApplicationComponent,
     RegistrationComponent,
+    LeaveApproveComponent,
     
   ],
   imports: [
@@ -54,7 +57,8 @@ import { RegistrationComponent } from './access-control/registration/registratio
     FormsModule,         // Optional, useful if also using template-driven forms
     MatFormFieldModule,
     MatSelectModule,
-    NgSelectModule
+    NgSelectModule,
+    MatButtonModule,
   ],
   providers: [
       ApiServiceService,

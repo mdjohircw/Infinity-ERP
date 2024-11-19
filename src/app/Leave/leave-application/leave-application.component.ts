@@ -271,8 +271,9 @@ export class LeaveApplicationComponent implements OnInit {
   isCardboxVisible: boolean = false;
   buttonText: string = 'Add New';
 
-  toggleCardbox(): void {
+  toggleCardbox() {
     this.isCardboxVisible = !this.isCardboxVisible;
+    
     this.buttonText = this.isCardboxVisible ? 'Close' : 'Add New';
   }
   ngOnInit(): void {

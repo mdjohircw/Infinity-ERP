@@ -9,6 +9,7 @@ import { EmployeeProfileComponent } from './Personnel/employee-profile/employee-
 import { SeparetionComponent } from './Personnel/separetion/separetion.component';
 import { LeaveApplicationComponent } from './Leave/leave-application/leave-application.component';
 import { RegistrationComponent } from './access-control/registration/registration.component';
+import { LeaveApproveComponent } from './Leave/leave-approve/leave-approve.component';
 const routes: Routes = [
   {
     path:'',
@@ -45,8 +46,11 @@ const routes: Routes = [
   {
     path:'login',
     component:RegistrationComponent
+  },
+  {
+    path : 'leave-approvelist',
+    component:LeaveApproveComponent
   }
-
 /*   { path: '', redirectTo: '/Employee-entry', pathMatch: 'full' },
   { path: '**', redirectTo: '/Employee-entry' } */
   

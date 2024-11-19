@@ -3,18 +3,20 @@ import { Injectable } from '@angular/core';
 import { catchError, delay, map, Observable, of, throwError } from 'rxjs';
 import { LeaveData } from './Leave/leave-data';
 import { PaginatedResponse } from './Leave/paginated-response';
+import { response } from 'express';
 @Injectable({
   providedIn: 'root'
 })
 export class LeaveService {
 
   private RootUrl='https://localhost:7220'
-  private userId: string = '113'; 
+  private userId: string = '89'; 
   private CompanyId : string ='0001';
   private EmpId : string = '00000017'
   private GetLeaveTypeUrl = `/api/Leave/LeaveType/${this.CompanyId}`;
   private GetEmployeeUrl = '/api/Employee/EmployeeName';
   private GetLeavesUrl = `/api/Leave/lvApplications/${this.CompanyId}?EmpId=${this.EmpId}`;
+  private GetLeaveApproveUrl = `/api/Leave/lvApplicationForApprove/${this.CompanyId}?UserId=${this.userId}`;
   private PostLeaveUrl = `/api/Leave/create/${this.userId}`;
   private DeleteLeaveUrl = `/api/Leave/delete`;
 
@@ -51,6 +53,15 @@ export class LeaveService {
         return response.data || []; // Adjust based on API response structure
       })
     );
+  }
+
+  getLeavesForApprove():Observable<LeaveData[]>{
+    return this.http.get<any> (this.RootUrl+this.GetLeaveApproveUrl).pipe(
+      map(response =>{
+        console.log('API Response ', response);
+        return response.data || [];
+      })
+    )
   }
   deleteLeave(leaveId: number): Observable<any> {
     const url = `${this.RootUrl}${this.DeleteLeaveUrl}/${leaveId}`;
@@ -102,7 +113,50 @@ export class LeaveService {
       })
     );
   }
+  getLvApprove(pageIndex: number, pageSize: number, filter: string, sortColumn: string, sortDirection: string): Observable<PaginatedResponse<LeaveData>> {
+    return this.getLeavesForApprove().pipe(
+      map((data: LeaveData[] | null | undefined) => {
+        console.log('API Response:', data); // Debugging step
+        let filteredData = data || []; // Default to empty array
   
+        // Apply filtering
+        if (filter) {
+          filter = filter.trim().toLowerCase();
+          filteredData = filteredData.filter(leave => 
+            leave.empName.toLowerCase().includes(filter) || 
+            leave.leaveName.toLowerCase().includes(filter)
+          );
+        }
+  
+        // Apply sorting
+        if (sortColumn && sortDirection) {
+          filteredData = filteredData.sort((a, b) => {
+            const isAsc = sortDirection === 'asc';
+            switch (sortColumn) {
+              case 'empName': return this.compare(a.empName, b.empName, isAsc);
+              case 'leaveName': return this.compare(a.leaveName, b.leaveName, isAsc);
+              case 'applyDate': return this.compare(a.applyDate, b.applyDate, isAsc);
+              default: return 0;
+            }
+          });
+        }
+  
+        // Ensure filteredData is an array before slicing
+        if (!Array.isArray(filteredData)) {
+          throw new Error('filteredData is not an array.');
+        }
+  
+        // Paginate the data
+        const startIndex = pageIndex * pageSize;
+        const paginatedData = filteredData.slice(startIndex, startIndex + pageSize);
+  
+        return {
+          content: paginatedData,
+          totalElements: filteredData.length
+        };
+      })
+    );
+  }
 
   private compare(a: string, b: string, isAsc: boolean): number {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
