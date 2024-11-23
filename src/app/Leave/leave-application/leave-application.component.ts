@@ -263,7 +263,7 @@ export class LeaveApplicationComponent implements OnInit {
 
 
   leaveTypes: { leaveId: number, leaveName: string }[] = [];
-  employees: { empId: number, fullName: string }[] = [];
+  employees: { empId: string, fullName: string }[] = [];
   company: { cmpId: string, cmpName: string }[] = []
   selectedCompanyId: string | null = null; 
   selectedLeaveIds:number | null = null;
@@ -284,12 +284,11 @@ export class LeaveApplicationComponent implements OnInit {
         console.error('Failed to fetch leave types:', response.message);
       }
     });
-    this.leaveService.getEmployees().subscribe(response => {
-      if (response.statusCode === 200) {
-        this.employees = response.data;
-      } else {
-        console.error('Failed to fetch leave types:', response.message);
-      }
+    this.leaveService.getEmployeesApiCall().subscribe(response => {
+    
+        this.employees = response;
+
+ 
     });
 
     this.company = [

@@ -24,7 +24,7 @@
             <img 
             [src]="element.empImage || 'assets/img/author/user_img_default.jpg'" 
               alt="Employee Image" 
-              style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;" 
+              style="width: 40px; height: 40px; margin-right: 10px;" 
             />
             <!-- Name and Designation -->
             <div>
@@ -59,35 +59,40 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
         <td mat-cell *matCellDef="let element"> {{element.leaveEndDate | date}} </td>
       </ng-container>
-<ng-container matColumnDef="actions">
-  <th mat-header-cell *matHeaderCellDef>Action</th>
-  <td mat-cell *matCellDef="let element">
-    <button
-      mat-raised-button
-      color="primary"
-      class="action-button"
-      (click)="onActionClick(element, 0)"
-    >
-      Forward
-    </button>
-    <button
-      mat-raised-button
-      color="accent"
-      class="action-button"
-      (click)="onActionClick(element, 1)"
-    >
-      Approve
-    </button>
-    <button
-      mat-raised-button
-      color="warn"
-      class="action-button"
-      (click)="onActionClick(element, 2)"
-    >
-      Decline
-    </button>
-  </td>
-</ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <!-- Forward Button -->
+          <button
+            *ngIf="element.authorityAction === 1 || element.authorityAction !== 2"
+            mat-raised-button
+            class="action-button custom-btn forward"
+            (click)="onlvApproveClick(0, element.id, 0)"
+          >
+            Forward
+          </button>
+      
+          <!-- Approve Button -->
+          <button
+            *ngIf="element.authorityAction === 2 || element.authorityAction !== 1"
+            mat-raised-button
+            class="action-button custom-btn approve"
+            (click)="onlvApproveClick(1, element.id, 0)"
+          >
+            Approve
+          </button>
+      
+          <!-- Reject Button (Always Present) -->
+          <button
+            mat-raised-button
+            class="action-button custom-btn reject"
+            (click)="onlvApproveClick(2, element.id, 0)"
+          >
+            Reject
+          </button>
+        </td>
+      </ng-container>
+      
 
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

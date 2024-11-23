@@ -28,6 +28,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { RegistrationComponent } from './access-control/registration/registration.component';
 import { LeaveApproveComponent } from './Leave/leave-approve/leave-approve.component';
 import { MatButtonModule } from '@angular/material/button';
+import { LvAuthorirySetupComponent } from './Leave/lv-authoriry-setup/lv-authoriry-setup.component';
+import { MatPseudoCheckbox } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,7 @@ import { MatButtonModule } from '@angular/material/button';
     LeaveApplicationComponent,
     RegistrationComponent,
     LeaveApproveComponent,
+    LvAuthorirySetupComponent,
     
   ],
   imports: [
@@ -59,6 +63,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     NgSelectModule,
     MatButtonModule,
+    MatCheckboxModule
   ],
   providers: [
       ApiServiceService,

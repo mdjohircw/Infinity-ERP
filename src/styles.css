@@ -31003,4 +31003,19 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     justify-content: end;
   }
   /*# sourceMappingURL=maps/style.css.map */
-  
+  .custom-btn{
+    margin-left: 5px !important;
+    padding: 5px 10px !important;
+    border-radius: 5px !important;
+    color: white !important;
+
+}
+.forward{
+    background-color:blueviolet !important;
+}
+.reject{
+    background-color: rgb(237, 117, 117) !important;
+}
+.approve{
+    background-color: green !important;
+}

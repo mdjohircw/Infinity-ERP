@@ -10,6 +10,7 @@ import { SeparetionComponent } from './Personnel/separetion/separetion.component
 import { LeaveApplicationComponent } from './Leave/leave-application/leave-application.component';
 import { RegistrationComponent } from './access-control/registration/registration.component';
 import { LeaveApproveComponent } from './Leave/leave-approve/leave-approve.component';
+import { LvAuthorirySetupComponent } from './Leave/lv-authoriry-setup/lv-authoriry-setup.component';
 const routes: Routes = [
   {
     path:'',
@@ -50,6 +51,10 @@ const routes: Routes = [
   {
     path : 'leave-approvelist',
     component:LeaveApproveComponent
+  },
+  {
+    path:'lv-authority-setup',
+    component:LvAuthorirySetupComponent
   }
 /*   { path: '', redirectTo: '/Employee-entry', pathMatch: 'full' },
   { path: '**', redirectTo: '/Employee-entry' } */

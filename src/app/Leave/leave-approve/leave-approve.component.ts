@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { LeaveService } from '../../leave.service';
 import { LeaveData } from '../leave-data';
 import { PaginatedResponse } from '../paginated-response';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-leave-approve',
   templateUrl: './leave-approve.component.html',
@@ -17,9 +18,7 @@ export class LeaveApproveComponent implements OnInit{
 
     
   }
-  onActionClick(element: any, actionValue: number): void {
-    console.log(actionValue)
-  }
+ 
   
   
   displayedColumns: string[] = [ 'empName', 'leaveName', 'applyDate', 'leaveStartDate', 'leaveEndDate','actions'];
@@ -68,5 +67,51 @@ export class LeaveApproveComponent implements OnInit{
     console.log('Edit element:', element);
   }
 
+  
+  onlvApproveClick(element: any, lvId: number, Notificationid: number): void {
+    let formData = {
+      id: lvId ,
+      approval_status: element,
+      notificationId: Notificationid
+   
+    };
+    try {
+      // Pass the formData object to the service method
+      this.leaveService.approveApplication(formData).subscribe(
+        (response) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Your leave approve has been successfully!',
+          });
+          // Uncomment this if loadData refreshes the data view
+          this.loadDataLvApprove();
+        },
+        (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'There was an error submitting your leave Approve. Please try again.',
+          });
+        }
+      );
+    } catch (error) {
+      console.error('Error handling file upload:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'File Processing Error',
+        text: 'There was an issue processing your files. Please try again.',
+      });
+    }
+  }
+  
 
-}
+
+
+
+
+
+
+    
+  }
+
