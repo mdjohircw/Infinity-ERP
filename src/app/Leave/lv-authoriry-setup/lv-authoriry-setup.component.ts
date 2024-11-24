@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { PaginatedResponse } from '../paginated-response';
 import { LeaveService } from '../../leave.service';
 import { IEmployee } from '../IEmployee';
+import { IAuthority } from '../IAuthority';
 @Component({
   selector: 'app-lv-authoriry-setup',
   templateUrl: './lv-authoriry-setup.component.html',
@@ -133,9 +134,26 @@ export class LvAuthorirySetupComponent implements OnInit {
   }
   
   currentSection: string = 'employee'; // Default section
-
+  lvAuthoritydisplayedColumns: string[] = [ 'empName', 'empCardNo','dptName','position','actions','add'];
+  lvAuthoritydataSource: IAuthority[] = [];
   loadAuthority(): void {
     this.currentSection = this.currentSection === 'employee' ? 'authority' : 'employee';
+
+    this.leaveService.GetAuthority(this.pageIndex, this.pageSize, this.filter, this.sortColumn, this.sortDirection)
+    .subscribe((response: PaginatedResponse<IAuthority>) => {
+      this.lvAuthoritydataSource = response.content;
+      this.totalData = response.totalElements;
+    });
   }
-  
+  onPageChangeAuthority(event: any): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadAuthority();
+  }
+
+  sortDataAuthority(event: any): void {
+    this.sortColumn = event.active;
+    this.sortDirection = event.direction;
+    this.loadAuthority();
+  }
 }

@@ -47,6 +47,8 @@
           </div>
 
           <div *ngIf="currentSection === 'employee'"  class="" id="Employee-section"> 
+            <h4>Select The User</h4>
+
             <div class="mat-elevation-z8" >
               <mat-form-field appearance="outline" class="search-bar">
                 <input matInput (keyup)="applyFilter($event)" placeholder="Type to search..." />
@@ -139,6 +141,85 @@
 
           <div *ngIf="currentSection === 'authority'" Id="Authority-section">
             <h4>Select The Authority</h4>
+            <div class="mat-elevation-z8" >
+
+              
+              <table mat-table [dataSource]="lvAuthoritydataSource" matSort (matSortChange)="sortDataAuthority($event)" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="userId">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                  <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+                </ng-container>
+              
+  
+                <ng-container matColumnDef="empName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee</th>
+                  <td mat-cell *matCellDef="let element">
+                    <div style="display: flex; align-items: center;">
+                      <!-- Image -->
+<!--                    <img 
+                      [src]="element.empImage || 'assets/img/author/user_img_default.jpg'" 
+                        alt="Employee Image" 
+                        style="width: 40px; height: 40px; margin-right: 10px;" 
+                      />  -->
+                      <!-- Name and Designation -->
+                      <div>
+                        <div style="font-weight: bold;">{{element.empName}}</div>
+                        <div style="font-size: 12px; color: gray;">{{element.dsgName}} ({{element.dptName}})</div>
+                       
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+              
+                <!-- Leave Type Column -->
+                <ng-container matColumnDef="empCardNo">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Card No</th>
+                  <td mat-cell *matCellDef="let element"> {{element.empCardNo}} </td>
+                </ng-container>     
+                <ng-container matColumnDef="dptName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
+                  <td mat-cell *matCellDef="let element"> {{element.dptName}} </td>
+                </ng-container> 
+                <ng-container matColumnDef="position">
+                  <th mat-header-cell *matHeaderCellDef>Position</th>
+                  <td mat-cell *matCellDef="let element">
+                    <input type="text" formControlName="txtPosition" placeholder="type Position" class="form-control ih-medium ip-light radius-xs b-light px-15" />
+
+                  </td>
+                </ng-container>
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>Action</th>
+                  <td mat-cell *matCellDef="let element">
+                    <!-- Radio Button Group -->
+                    <mat-radio-group [(ngModel)]="element.action" class="action-radio-group">
+                      <mat-radio-button value="approve">Approve</mat-radio-button>
+                      <mat-radio-button value="forward">Forward</mat-radio-button>
+                      <mat-radio-button value="both">Both</mat-radio-button>
+                    </mat-radio-group>
+                
+                    <!-- Add Button -->
+
+                  </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="add">
+                  <th mat-header-cell *matHeaderCellDef>Add</th>
+                  <td mat-cell *matCellDef="let element">
+
+                    <button mat-raised-button class="action-button custom-btn forward ">
+                      Add
+                    </button>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="lvAuthoritydisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: lvAuthoritydisplayedColumns;"></tr>
+              </table>
+              
+              <mat-paginator [length]="totalData" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" (page)="onPageChangeAuthority($event)">
+              </mat-paginator>
+            </div>
             <div>
 
             </div>

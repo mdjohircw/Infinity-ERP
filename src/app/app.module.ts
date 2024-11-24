@@ -31,6 +31,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { LvAuthorirySetupComponent } from './Leave/lv-authoriry-setup/lv-authoriry-setup.component';
 import { MatPseudoCheckbox } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio'; // Import the MatRadioModule
+
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     NgSelectModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatRadioModule,
+    
   ],
   providers: [
       ApiServiceService,
