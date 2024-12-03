@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmployeeEntryComponent } from './employee-entry/employee-entry.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
@@ -11,6 +12,7 @@ import { LeaveApplicationComponent } from './Leave/leave-application/leave-appli
 import { RegistrationComponent } from './access-control/registration/registration.component';
 import { LeaveApproveComponent } from './Leave/leave-approve/leave-approve.component';
 import { LvAuthorirySetupComponent } from './Leave/lv-authoriry-setup/lv-authoriry-setup.component';
+import { AuthGuard } from './access-control/auth.guard';
 const routes: Routes = [
   {
     path:'',
@@ -19,6 +21,7 @@ const routes: Routes = [
   {
   path:'DashBoard',
   component:DashboardComponent
+  
   },
   {
   path:'Employee-entry',
@@ -55,9 +58,11 @@ const routes: Routes = [
   {
     path:'lv-authority-setup',
     component:LvAuthorirySetupComponent
-  }
+  },
 /*   { path: '', redirectTo: '/Employee-entry', pathMatch: 'full' },
   { path: '**', redirectTo: '/Employee-entry' } */
+
+/*   { path: '**', redirectTo: '/DashBoard' }, */
   
 ];
 
@@ -65,4 +70,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+ 
 export class AppRoutingModule { }

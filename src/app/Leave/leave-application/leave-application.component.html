@@ -193,12 +193,8 @@
 
 
         <div class="mat-elevation-z8" >
-          <mat-form-field appearance="outline" class="search-bar">
-            <input matInput (keyup)="applyFilter($event)" placeholder="Type to search..." />
-            <button mat-icon-button matSuffix aria-label="Clear" >
-              <mat-icon>search</mat-icon>
-            </button>
-          </mat-form-field>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Type to search..."  class="form-control searchBar">
+
           
         
           <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">

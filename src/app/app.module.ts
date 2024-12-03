@@ -31,8 +31,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { LvAuthorirySetupComponent } from './Leave/lv-authoriry-setup/lv-authoriry-setup.component';
 import { MatPseudoCheckbox } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AuthService } from './access-control/Auth.service';
 import { MatRadioModule } from '@angular/material/radio'; // Import the MatRadioModule
-
+import express from 'express';
+import process from 'process';
+import { PermissionService } from './access-control/permission.service';
+import { AuthGuard } from './access-control/auth.guard';
 
 @NgModule({
   declarations: [
@@ -47,6 +51,7 @@ import { MatRadioModule } from '@angular/material/radio'; // Import the MatRadio
     RegistrationComponent,
     LeaveApproveComponent,
     LvAuthorirySetupComponent,
+  
     
   ],
   imports: [
@@ -68,10 +73,14 @@ import { MatRadioModule } from '@angular/material/radio'; // Import the MatRadio
     MatCheckboxModule,
     MatRadioModule,
     
+    
   ],
   providers: [
       ApiServiceService,
       LeaveService,
+      AuthService,
+      PermissionService,
+      AuthGuard,
       provideHttpClient(),
       provideClientHydration()
     

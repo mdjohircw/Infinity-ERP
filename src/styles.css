@@ -31019,3 +31019,10 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 .approve{
     background-color: green !important;
 }
+.searchBar{
+    width: 250px;
+    padding: 10px;
+    font-size: 18px;
+    float: right;
+    margin-top: 10px;
+}

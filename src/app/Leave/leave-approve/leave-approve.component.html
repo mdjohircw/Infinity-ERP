@@ -1,10 +1,10 @@
-<div class="mat-elevation-z8" >
-    <mat-form-field appearance="outline" class="search-bar">
-      <input matInput (keyup)="applyFilter($event)" placeholder="Type to search..." />
-      <button mat-icon-button matSuffix aria-label="Clear" >
-        <mat-icon>search</mat-icon>
-      </button>
-    </mat-form-field>
+<div class="crm mb-25">
+  <div class="container-fulid">
+     <div class="card card-Vertical card-default card-md mt-4 mb-4">
+  
+  <div class="mat-elevation-z8" >
+      <input matInput (keyup)="applyFilter($event)" placeholder="Type to search..." class="form-control searchBar"/>
+
     
   
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
@@ -104,4 +104,6 @@
   </div>
 
 
-  
+  </div>
+  </div>
+  </div>

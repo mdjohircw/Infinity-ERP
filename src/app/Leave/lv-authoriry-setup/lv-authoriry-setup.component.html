@@ -45,17 +45,19 @@
                 </div>
               </div>
           </div>
-
+ 
           <div *ngIf="currentSection === 'employee'"  class="" id="Employee-section"> 
-            <h4>Select The User</h4>
+           
 
             <div class="mat-elevation-z8" >
-              <mat-form-field appearance="outline" class="search-bar">
-                <input matInput (keyup)="applyFilter($event)" placeholder="Type to search..." />
-                <button mat-icon-button matSuffix aria-label="Clear" >
-                  <mat-icon>search</mat-icon>
-                </button>
-              </mat-form-field>
+              <div class="d-flex justify-content-between mt-25">
+                <h4>Select The User</h4>
+                <input matInput (keyup)="applyFilter($event)" class="form-control searchBar" placeholder="Type to search..." />
+
+              </div>
+              
+
+             
               
               <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
   
