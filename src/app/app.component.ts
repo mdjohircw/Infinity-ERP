@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { ApiServiceService } from './api-service.service';
-import { PermissionService } from './access-control/permission.service';
+import { PermissionService } from './core/services/permission.service';
 import { Router } from '@angular/router';
-import { AuthService } from './access-control/Auth.service';
+import { AuthService } from './core/services/auth.service';
 
 
 @Component({
@@ -16,9 +15,10 @@ export class AppComponent {
 
   }
  
-  logout(): void {
-    this.auth.logout();
-    // Optionally, you could navigate to a login page or perform other actions
-  }
 
+  loading: boolean = true;
+  logoutUser() {
+    sessionStorage.clear(); // Clear all session data
+    this.router.navigate(['/login']); // Redirect to login page
+  }
 }
